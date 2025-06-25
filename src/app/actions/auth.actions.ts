@@ -80,3 +80,45 @@ export async function signUpAction(signupData: AuthFormData): Promise<AuthRespon
     return { success: false, message: "Signup error." };
   }
 }
+
+export async function signOutAction(): Promise<AuthResponse> {
+  try {
+    const endpoint = `${url}/api/auth/signout`;
+
+    const res = await fetch(endpoint, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      credentials: "include",
+    });
+
+    const json: FetchResponse = await res.json();
+    
+
+    if (json.success && json.token) {
+ 
+       const cookieStore =await cookies(); // no need to await here
+
+      cookieStore.set("access_token", json.token, {
+        httpOnly: true,
+        secure: process.env.NEXT_PUBLIC_NODE_DEV === "production",
+        sameSite:
+          process.env.NEXT_PUBLIC_NODE_DEV === "production" ? "none" : "lax",
+        path: "/",
+        maxAge: 0, 
+      });
+   }
+
+    return json;
+  } catch (error) {
+    console.error("Signout error:", error);
+    return { success: false, message: "Signout error." };
+  }
+}
+
+export async function getToken(): Promise<string | null> {
+  const cookieStore = await cookies();
+  const tokenCookie = cookieStore.get("access_token");
+  return tokenCookie ? tokenCookie.value : null;
+}

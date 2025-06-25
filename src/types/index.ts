@@ -1,4 +1,5 @@
 import { authSchema } from "@/schema/authSchema";
+import { freshdeskSchema, hubspotSchema } from "@/schema/connectionFormSchema";
 import { z } from "zod";
 
 export type AuthFormData = z.infer<typeof authSchema>;
@@ -17,3 +18,5 @@ export interface AuthResponse {
   
  
 }
+export type FreshdeskFormData = z.infer<typeof freshdeskSchema>;
+export type HubSpotFormData = z.infer<typeof hubspotSchema>;
