@@ -1,8 +1,7 @@
 import type { Metadata } from "next";
 import "../globals.css";
 import { Toaster } from "sonner";
-
-
+import Navbar from "./_components/Navbar";
 
 export const metadata: Metadata = {
   title: "Portal",
@@ -17,9 +16,13 @@ export default function DashboardLayout({
   return (
     <html lang="en">
       <body
-      style={{ fontFamily: 'var(--font-geist-questrial)' }}
+        className="bg-gray-50 text-gray-900 min-h-screen font-sans"
+        style={{ fontFamily: 'var(--font-geist-questrial)' }}
       >
-        {children}
+        <Navbar />
+        <main className="max-w-7xl mx-auto px-4 py-6">
+          {children}
+        </main>
         <Toaster richColors position="top-center" duration={3000} />
       </body>
     </html>
