@@ -83,19 +83,29 @@ export async function signUpAction(signupData: AuthFormData): Promise<AuthRespon
 
 export async function signOutAction(): Promise<AuthResponse> {
   try {
-   
- 
-       const cookieStore =await cookies(); // no need to await here
-
-      cookieStore.set("access_token","", {
-        httpOnly: true,
-        secure: process.env.NEXT_PUBLIC_NODE_DEV === "production",
-        sameSite:
-          process.env.NEXT_PUBLIC_NODE_DEV === "production" ? "none" : "lax",
-        path: "/",
-        maxAge: 0, 
+    const cookieStore = await cookies();
+    const tokenCookie = cookieStore.get("access_token");
+    
+    // If token exists, add it to blacklist via backend API
+    if (tokenCookie?.value) {
+      await fetch(`${url}/api/auth/logout`, {
+        method: "POST",
+        headers: {
+          "Authorization": `Bearer ${tokenCookie.value}`,
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
       });
-   
+    }
+
+    // Clear the cookie
+    cookieStore.set("access_token", "", {
+      httpOnly: true,
+      secure: process.env.NEXT_PUBLIC_NODE_DEV === "production",
+      sameSite: process.env.NEXT_PUBLIC_NODE_DEV === "production" ? "none" : "lax",
+      path: "/",
+      maxAge: 0,
+    });
 
     return { success: true, message: "Signed out successfully" };
   } catch (error) {

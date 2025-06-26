@@ -40,7 +40,7 @@ const Navbar = () => {
       
       if (res.success) {
         toast.success("Logged out successfully");
-        router.push("/");
+        router.push("/signin");
       } else {
         throw new Error(res.message || "Logout failed");
       }
