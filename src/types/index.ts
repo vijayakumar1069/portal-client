@@ -85,3 +85,19 @@ export interface HubSpotContact {
     lastmodifieddate: string;
   };
 }
+
+export interface WebhookLog {
+
+  event: string;
+  source: string;
+  userId: string;
+  createdAt?: string | Date;
+  updatedAt?: string | Date;
+  timestamp?: string | Date;
+  payload?: {
+    status?: string;
+    ticketId?: string;
+    [key: string]: unknown;
+  };
+  _id?: string;
+}

@@ -14,7 +14,7 @@ export default async function GetUserContactDetails({ id }: { id: number }) {
         cache: "no-store",
     }
   )
-  console.log(res)
+
 
   const properties = res.contact?.properties || {};
   const fullName = [properties.firstname, properties.lastname].filter(Boolean).join(" ");

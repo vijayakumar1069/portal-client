@@ -9,11 +9,10 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-
+  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-
 import { toast } from 'sonner';
 import Link from 'next/link';
 
@@ -67,66 +66,102 @@ const Navbar = () => {
     }
   };
 
-  // Mock user data - replace with actual user context/props
-
-
   return (
-    <nav className="sticky top-0 z-50 w-full border-b border-gray-400 bg-blue-600 backdrop-blur supports-[backdrop-filter]:bg-blue-50">
-      <div className="container flex h-16 max-w-full px-10 items-center">
+    <nav className="sticky top-0 z-50 w-full border-b border-slate-200/50 bg-white/95 backdrop-blur-md supports-[backdrop-filter]:bg-white/80 shadow-sm">
+      <div className="container flex h-16 max-w-full px-6 items-center">
         {/* Portal Brand */}
-        <div className="mr-4 flex">
-          <Link className="mr-6 flex items-center space-x-2" href="/tickets">
-            <div className="h-8 w-8 rounded-lg bg-gradient-to-br from-blue-600 to-purple-600 flex items-center justify-center">
-              <span className="text-white font-bold text-sm">P</span>
+        <div className="mr-8 flex">
+          <Link 
+            className="mr-6 flex items-center space-x-3 group transition-all duration-200 hover:scale-105" 
+            href="/tickets"
+          >
+            <div className="h-9 w-9 rounded-xl bg-gradient-to-br from-blue-600 via-purple-600 to-indigo-700 flex items-center justify-center shadow-lg group-hover:shadow-xl transition-shadow duration-200">
+              <span className="text-white font-bold text-lg">P</span>
             </div>
-            <span className="hidden font-bold text-xl sm:inline-block bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+            <span className="hidden font-bold text-2xl sm:inline-block bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-700 bg-clip-text text-transparent">
               Portal
             </span>
           </Link>
         </div>
 
         {/* Navigation Links */}
-        <div className="flex flex-1 items-center justify-between space-x-2 md:justify-end">
-          <div className="w-full flex-1 md:w-auto md:flex-none">
-            {/* You can add search or other navigation items here */}
-          </div>
+        <div className="flex flex-1 items-center justify-between space-x-4 md:justify-end">
+         
           
-          <nav className="flex items-center space-x-2">
-          
-
+          <nav className="flex items-center space-x-3">
             {/* User Dropdown */}
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <Button variant="ghost" className="relative h-10 w-10 rounded-full">
-                  <Avatar className="h-10 w-10">
-                    <AvatarImage  />
-                    <AvatarFallback className="bg-gradient-to-br from-blue-600 to-purple-600 text-white">
-                      p
+                <Button 
+                  variant="ghost" 
+                  className="relative h-11 w-11 rounded-full hover:bg-slate-100 transition-colors duration-200 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+                >
+                  <Avatar className="h-10 w-10 ring-2 ring-white shadow-md">
+                    <AvatarImage />
+                    <AvatarFallback className="bg-gradient-to-br from-blue-600 via-purple-600 to-indigo-700 text-white font-semibold text-sm">
+                      P
                     </AvatarFallback>
                   </Avatar>
                 </Button>
               </DropdownMenuTrigger>
               
-              <DropdownMenuContent className="w-56" align="end" forceMount>
-               
-             
+              <DropdownMenuContent 
+                className="w-64 p-2 bg-white/95 backdrop-blur-md border border-slate-200/50 shadow-xl rounded-xl" 
+                align="end" 
+                forceMount
+              >
                 
+
+                {/* Navigation Items */}
+                <DropdownMenuItem asChild>
+                  <Link 
+                    href="/tickets" 
+                    className="w-full flex items-center px-3 py-2.5 text-sm font-medium text-slate-700 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-colors duration-150 cursor-pointer"
+                  >
+                    <div className="h-5 w-5 mr-3 bg-blue-100 rounded-md flex items-center justify-center">
+                      🎫
+                    </div>
+                    Tickets
+                  </Link>
+                </DropdownMenuItem>
+
+                <DropdownMenuItem asChild>
+                  <Link 
+                    href="/logs" 
+                    className="w-full flex items-center px-3 py-2.5 text-sm font-medium text-slate-700 hover:text-purple-600 hover:bg-purple-50 rounded-lg transition-colors duration-150 cursor-pointer"
+                  >
+                    <div className="h-5 w-5 mr-3 bg-purple-100 rounded-md flex items-center justify-center">
+                      📋
+                    </div>
+                    Logs
+                  </Link>
+                </DropdownMenuItem>
+
+                <DropdownMenuSeparator className="my-2 bg-slate-100" />
+
+                {/* Logout Item */}
                 <DropdownMenuItem 
-                  className="cursor-pointer text-red-600 focus:text-red-600 focus:bg-red-50" 
+                  className="px-3 py-2.5 cursor-pointer text-red-600 hover:text-red-700 hover:bg-red-50 focus:text-red-700 focus:bg-red-50 rounded-lg transition-colors duration-150" 
                   onClick={handleLogout}
                   disabled={logoutState.isLoading}
                 >
-                  {logoutState.isLoading ? (
-                    <>
-                      <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                      <span>Logging out...</span>
-                    </>
-                  ) : (
-                    <>
-                      <LogOut className="mr-2 h-4 w-4" />
-                      <span>Log out</span>
-                    </>
-                  )}
+                  <div className="flex items-center w-full">
+                    {logoutState.isLoading ? (
+                      <>
+                        <div className="h-5 w-5 mr-3 flex items-center justify-center">
+                          <Loader2 className="h-4 w-4 animate-spin" />
+                        </div>
+                        <span className="text-sm font-medium">Logging out...</span>
+                      </>
+                    ) : (
+                      <>
+                        <div className="h-5 w-5 mr-3 bg-red-100 rounded-md flex items-center justify-center">
+                          <LogOut className="h-3 w-3" />
+                        </div>
+                        <span className="text-sm font-medium">Log out</span>
+                      </>
+                    )}
+                  </div>
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>

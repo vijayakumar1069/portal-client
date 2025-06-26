@@ -18,7 +18,7 @@ const useAccessToken = () => {
           method: "GET",
           credentials: "include",
         });
-        console.log(response);
+     
 
         if (!response.ok) {
           throw new Error("Failed to fetch token");

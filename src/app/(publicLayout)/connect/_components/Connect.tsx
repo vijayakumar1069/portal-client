@@ -52,7 +52,7 @@ export default function Connect() {
     }
   });
   const { token } = useAccessToken();
-  console.log(token);
+
   const {loading:isLoading,fetchData} = useFetch();
 
   const onFreshdeskSubmit = async (data: FreshdeskFormData) => {

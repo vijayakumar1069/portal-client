@@ -83,24 +83,11 @@ export async function signUpAction(signupData: AuthFormData): Promise<AuthRespon
 
 export async function signOutAction(): Promise<AuthResponse> {
   try {
-    const endpoint = `${url}/api/auth/signout`;
-
-    const res = await fetch(endpoint, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      credentials: "include",
-    });
-
-    const json: FetchResponse = await res.json();
-    
-
-    if (json.success && json.token) {
+   
  
        const cookieStore =await cookies(); // no need to await here
 
-      cookieStore.set("access_token", json.token, {
+      cookieStore.set("access_token","", {
         httpOnly: true,
         secure: process.env.NEXT_PUBLIC_NODE_DEV === "production",
         sameSite:
@@ -108,9 +95,9 @@ export async function signOutAction(): Promise<AuthResponse> {
         path: "/",
         maxAge: 0, 
       });
-   }
+   
 
-    return json;
+    return { success: true, message: "Signed out successfully" };
   } catch (error) {
     console.error("Signout error:", error);
     return { success: false, message: "Signout error." };

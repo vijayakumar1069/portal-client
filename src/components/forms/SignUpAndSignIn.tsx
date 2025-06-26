@@ -40,18 +40,18 @@ const SignUpAndSignIn: React.FC<SignUpAndSignInProps> = ({ mode }) => {
     try {
       setIsLoading(true);
       setApiError('');
-      console.log(data);
+
       
       if (mode === "signup") {
         const response: AuthResponse = await signUpAction(data);
-        console.log(response);
+    
         if (response.success) {
           toast.success("Account created successfully! Welcome aboard! 🎉");
           setApiError('');
           form.reset();
           router.push("/connect");
         } else {
-          console.log("error");
+         
           setApiError(response.message || 'An unexpected error occurred. Please try again.');
         }
       } else {
