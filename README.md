@@ -69,6 +69,17 @@ npm run lint     # Run linting
 - Dark/light theme
 - Responsive design
 
+## 🔐 Demo Login
+
+For testing the live application:
+
+```
+Email: vijay@gmail.com
+Password: Vijay@123
+```
+
+*Note: Replace with your actual demo credentials*
+
 ## 🚀 Deployment
 
 Deploy to Vercel:
